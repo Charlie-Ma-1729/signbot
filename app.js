@@ -6,15 +6,6 @@ dotenv.config();
 const token = process.env.TOKEN;
 console.log(token);
 const client = new Discord.Client();
-const ejs = require('ejs');
-const express = require('express');
-const path = require('path');
-const app = express();
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.get('/', (req, res) => {
-    res.render('index');
-});
 const mongoDB = 'mongodb+srv://signbot:20201016@users.1zwb5.mongodb.net/SignInData?retryWrites=true&w=majority'
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
@@ -83,5 +74,5 @@ client.on("message", async msg => {
     }
 });
 
-
+app.listen(port_number, () => console.log('Server up and running'));
 client.login(token);
