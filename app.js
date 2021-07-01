@@ -3,9 +3,19 @@ const schedule = require('node-schedule');
 const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 dotenv.config();
+const express = require("express");
+const app = express();
+const ejs = require("ejs");
+const path = require("path");
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 const token = process.env.TOKEN;
+let port_number = process.env.PORT || 3000;
 console.log(token);
 const client = new Discord.Client();
+app.get('/', async function (req, res) {
+    res.render('index');
+});
 const mongoDB = 'mongodb+srv://signbot:20201016@users.1zwb5.mongodb.net/SignInData?retryWrites=true&w=majority'
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
@@ -15,7 +25,7 @@ mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true})
         console.log(err)
     })
 
-
+    
 const Schema = mongoose.Schema
 // 先新增 Author 的 Schema ，其中可設定姓名、生卒年等，可對其 value 的規格做限制。
 const UserSchema = new Schema(
@@ -73,5 +83,5 @@ client.on("message", async msg => {
 
     }
 });
-
+app.listen(port_number, () => console.log('Server up and running'));
 client.login(token);
