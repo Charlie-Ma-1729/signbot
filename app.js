@@ -76,6 +76,7 @@ client.on("message", async msg => {
             } else {
                 await UserData.updateOne({server: serverid, userid: username}, {$inc: {count: 1}})
                 await UserData.updateOne({server: serverid, userid: username}, {$inc: {tf: 1}})
+                let data = await UserData.findOne({server: serverid, userid: username});
                 msg.channel.send('哇喔!是**' + msg.author.username + '**耶~ 今天也很高興見到你');
                 msg.channel.send('你已經累計簽到了**' + data.count + '**次囉!');
             }
