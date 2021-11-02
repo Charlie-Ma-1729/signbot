@@ -104,7 +104,6 @@ client.on("message", async msg => {
         }
     }
 
-}
 });
 app.listen(port_number, () => console.log('Server up and running'));
 client.login(token);
