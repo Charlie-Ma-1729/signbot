@@ -113,6 +113,25 @@ client.on("message", async msg => {
             let data = await UserData.findOne({ server: serverid, userid: username });
             msg.channel.send('**' + msg.author.username + '**的簽到目標為**' + data.goal + '**次!');
         }
+
+    }
+    if (msg.content == '!mysign') {
+        await msg.react("📝")
+        let username = msg.author.id
+        let serverid = msg.guild.id
+        if (!await UserData.findOne({ server: serverid, userid: username })) {
+            msg.channel.send('哈囉**' + msg.author.username + '**~ 你好像還沒簽到過喔!沒看過你呢!');
+        } else {
+            let data = await UserData.findOne({ server: serverid, userid: username });
+            msg.channel.send('哈囉**' + msg.author.username + '**!你目前已經簽到**' + data.count + '**次了喔!');
+        }
+
+    }
+
+    if (msg.content == '!signhelp') {
+        await msg.react("⁉")
+        msg.channel.send('**簽到機器人使用說明:**\n```\n!sign: 簽到\n!mysign: 查看目前簽到數\n!setgoal <數字>: 可以設定目標簽到數，到達目標簽到數時會有恭喜的訊息(省略範例上的<>)\n!mygoal: 查看自己的目標\n!signhelp: 查看現在這串東西\n```');
+
     }
 
 });
